@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DemoPhotos</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="default_content_description">default content description</string>
+    <string name="lorem">Lorem ipsum</string>
+    <string name="image_id">id is %d</string>
+</resources>
