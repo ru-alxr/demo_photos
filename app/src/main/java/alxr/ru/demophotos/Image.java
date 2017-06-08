@@ -1,9 +1,9 @@
 package alxr.ru.demophotos;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.google.gson.annotations.SerializedName;
 
 class Image implements Parcelable {
@@ -18,7 +18,7 @@ class Image implements Parcelable {
     @SerializedName("photo")
     private String photo;
     @SerializedName("id")
-    private int id;
+    private long id;
     @SerializedName("comment")
     private String comment;
 
@@ -31,7 +31,7 @@ class Image implements Parcelable {
         title = in.readString();
         publishedAt = in.readString();
         photo = in.readString();
-        id = in.readInt();
+        id = in.readLong();
         comment = in.readString();
         local = in.readByte() != 0;
     }
@@ -68,7 +68,7 @@ class Image implements Parcelable {
         return photo;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -84,7 +84,7 @@ class Image implements Parcelable {
         this.publishedAt = publishedAt;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -101,8 +101,16 @@ class Image implements Parcelable {
         return "demo_image_#" + id;
     }
 
-    ImageSource getUri() {
-        return ImageSource.uri(photo);
+    Uri getUri() {
+        if (photo == null) return null;
+        String uri = photo;
+        if (!uri.contains("://")) {
+            if (uri.startsWith("/")) {
+                uri = uri.substring(1);
+            }
+            uri = "file:///" + uri;
+        }
+        return Uri.parse(uri);
     }
 
     @Override
@@ -115,7 +123,7 @@ class Image implements Parcelable {
         dest.writeString(title);
         dest.writeString(publishedAt);
         dest.writeString(photo);
-        dest.writeInt(id);
+        dest.writeLong(id);
         dest.writeString(comment);
         dest.writeByte((byte) (local ? 1 : 0));
     }
@@ -123,4 +131,5 @@ class Image implements Parcelable {
     void setPhoto(String photo) {
         this.photo = photo;
     }
+
 }

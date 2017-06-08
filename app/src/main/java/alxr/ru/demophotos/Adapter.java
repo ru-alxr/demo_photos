@@ -7,19 +7,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-class Adapter extends RecyclerView.Adapter<AbstractViewHolder> {
-
-    private static final int TYPE_LOCAL = 1;
-    private static final int TYPE_API = 2;
+class Adapter extends RecyclerView.Adapter<BigPictureViewHolder> {
 
     Adapter() {
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        Image image = getImage(position);
-        if (image.isLocal()) return TYPE_LOCAL;
-        return TYPE_API;
     }
 
     private List<Image> data;
@@ -34,20 +24,13 @@ class Adapter extends RecyclerView.Adapter<AbstractViewHolder> {
     }
 
     @Override
-    public AbstractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case TYPE_API:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_picture, parent, false);
-                return new ViewHolder(view);
-            default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_big_picture, parent, false);
-                return new BigPictureViewHolder(view);
-        }
+    public BigPictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_big_picture, parent, false);
+        return new BigPictureViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AbstractViewHolder holder, int position) {
+    public void onBindViewHolder(BigPictureViewHolder holder, int position) {
         Image image = getImage(position);
         holder.bind(image);
     }

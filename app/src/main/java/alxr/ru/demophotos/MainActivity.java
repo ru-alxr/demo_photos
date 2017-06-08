@@ -190,9 +190,11 @@ public class MainActivity extends AppCompatActivity {
                     image.setPhoto(tempFilePath);
                     image.setComment("This photo was made by user");
                     image.setTitle("Default title");
-                    image.setId(-1);
+                    image.setId(System.currentTimeMillis());
                     image.setPublishedAt("Not published yet");
                     adapter.addImage(image);
+                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                    recyclerView.smoothScrollToPosition(0);
                 }
                 break;
 
